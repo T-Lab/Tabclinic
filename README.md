@@ -1,5 +1,5 @@
 # TabClinic: Interpretable, Extensible and Accurate Tabular Data Quality Assessment with LLM-Induced Decision Trees
 
-![Description](UI.png)
+![Description](UI.pdf)
 
 
