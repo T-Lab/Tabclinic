@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tabclinic Static Dashboard</title>
+  <style>
+    :root {
+      --bg: #f5f6fb;
+      --panel: #ffffff;
+      --line: #e7e9f2;
+      --text: #273247;
+      --muted: #7a8499;
+      --blue: #5f8df7;
+      --blue-dark: #4876ea;
+      --blue-soft: #edf3ff;
+      --green: #6abf8c;
+      --green-soft: #e9f7ef;
+      --red: #d96b6b;
+      --red-soft: #fbeaea;
+      --orange: #d19a4f;
+      --orange-soft: #f8eedf;
+      --shadow: 0 8px 24px rgba(43, 57, 92, 0.08);
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: linear-gradient(180deg, #f7f8fc 0%, #f2f4fa 100%);
+      color: var(--text);
+    }
+
+    .page {
+      width: 1536px;
+      margin: 0 auto;
+      padding: 10px 6px 14px;
+    }
+
+    .brand {
+      margin: 0 0 8px 10px;
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: 29px;
+      line-height: 1;
+      color: #244a93;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    .brand p {
+      margin: 4px 0 0;
+      color: #6e7486;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .dashboard {
+      display: grid;
+      grid-template-columns: 440px 410px 650px;
+      grid-template-rows: 392px auto;
+      gap: 14px;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.9);
+      border: 1px solid #edf0f6;
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      backdrop-filter: blur(6px);
+    }
+
+    .card-title {
+      font-size: 16px;
+      font-weight: 800;
+      padding: 16px 18px 10px;
+      color: #243246;
+    }
+
+    .group-card {
+      border: 2px solid #cfd6e3;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.9);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .group-title {
+      font-size: 16px;
+      font-weight: 800;
+      padding: 14px 18px 8px;
+      color: #243246;
+    }
+
+    .upload-preview-wrap {
+      grid-column: 1 / 3;
+      grid-row: 1;
+    }
+
+    .upload-preview {
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 0;
+    }
+
+    .upload-panel, .preview-panel {
+      border-right: 1px solid var(--line);
+    }
+
+    .preview-panel { border-right: none; }
+
+    .panel-inner { padding: 0 18px 18px; }
+
+    .soft-box {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: linear-gradient(180deg, #fbfbfe 0%, #f7f8fc 100%);
+      padding: 16px 14px;
+      min-height: 280px;
+    }
+
+    .field-label {
+      font-size: 17px;
+      font-weight: 800;
+      margin-bottom: 14px;
+    }
+
+    .radio-list {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      margin: 6px 0 28px;
+    }
+
+    .radio-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 17px;
+      color: #2e3950;
+    }
+
+    .radio {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 2px solid #dfe3ee;
+      background: #fff;
+      position: relative;
+      flex: 0 0 auto;
+    }
+
+    .radio.selected {
+      border-color: var(--blue);
+    }
+
+    .radio.selected::after {
+      content: "";
+      position: absolute;
+      inset: 4px;
+      border-radius: 50%;
+      background: var(--blue);
+    }
+
+    .upload-btn {
+      width: 100%;
+      border: none;
+      border-radius: 12px;
+      padding: 16px 20px;
+      color: white;
+      font-size: 17px;
+      font-weight: 800;
+      background: linear-gradient(90deg, #5d87f4 0%, #4a7bf3 45%, #5a95ff 100%);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.35), 0 10px 20px rgba(83, 129, 245, 0.28);
+      text-align: center;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      border-radius: 12px;
+      background: #fff;
+      font-size: 13px;
+    }
+
+    thead th {
+      background: #f3f5fb;
+      color: #5f6980;
+      text-align: left;
+      font-weight: 800;
+      font-size: 13px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+    }
+
+    tbody td {
+      padding: 14px 12px;
+      border: 1px solid var(--line);
+      color: #4d576c;
+      font-size: 13px;
+    }
+
+    tbody tr td:first-child {
+      font-weight: 800;
+      color: #2f3a4d;
+    }
+
+    .decision-wrap {
+      grid-column: 3;
+      grid-row: 1;
+    }
+
+    .decision-card {
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      overflow: visible;
+      backdrop-filter: none;
+    }
+
+    .decision-inner {
+      padding: 0 18px 18px;
+    }
+
+    .metric-card {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      align-items: stretch;
+      min-height: 150px;
+    }
+
+    .metric-box {
+      padding: 12px 18px;
+      border-right: 1px solid var(--line);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .metric-box:last-child { border-right: none; }
+
+    .metric-label {
+      font-size: 13px;
+      color: #596276;
+      margin-bottom: 6px;
+    }
+
+    .metric-value {
+      font-size: 22px;
+      line-height: 1;
+      font-weight: 800;
+      color: #1f2b3f;
+    }
+
+    .recommend-content {
+      padding: 0 18px 16px;
+    }
+
+    .recommend-content ul {
+      margin: 4px 0 0 18px;
+      padding: 0;
+      color: #445066;
+    }
+
+    .recommend-content li {
+      margin: 0 0 18px;
+      line-height: 1.32;
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .column-wrap {
+      padding: 0 14px 16px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 104px;
+      padding: 8px 18px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .badge.acceptable {
+      background: var(--orange-soft);
+      color: #b77a2d;
+    }
+
+    .badge.risky {
+      background: #f8eadc;
+      color: #b06e31;
+    }
+
+    .badge.good {
+      background: var(--green-soft);
+      color: #3b9a61;
+    }
+
+    .mini-note {
+      color: #7b8397;
+      font-size: 13px;
+      padding: 0 18px 8px;
+    }
+
+    .multi-wrap {
+    grid-column: 1 / 4;
+    grid-row: 2;
+    display: grid;
+    grid-template-columns: 680px 350px 430px;
+    grid-template-areas:
+        "metrics metrics consistency"
+        "column column recommend";
+    gap: 14px;
+    border: 2px solid #cfd6e3;
+    border-radius: 18px;
+    background: transparent;
+    padding: 56px 18px 18px 18px;
+    position: relative;
+    box-shadow: var(--shadow);
+    }
+
+    .multi-wrap .group-title {
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: #fff;
+      border-top-left-radius: 16px;
+      border-top-right-radius: 16px;
+      width: 100%;
+      padding: 14px 18px 8px;
+      z-index: 2;
+    }
+
+    .consistency-card {
+      grid-area: consistency;
+      box-shadow: none;
+      padding-bottom: 10px;
+    }
+
+    .metric-card {
+      grid-area: metrics;
+      box-shadow: none;
+    }
+
+    .recommend-card {
+      grid-area: recommend;
+      box-shadow: none;
+    }
+
+    .column-card {
+      grid-area: column;
+      box-shadow: none;
+      min-height: 290px;
+    }
+
+    .section-tight .card-title { padding-bottom: 12px; }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="brand">
+      <h1>Tabclinic</h1>
+      <p>Interpretable, Extensible and Accurate Tabular Data Quality Assessment with LLM-Induced Decision Trees</p>
+    </div>
+
+    <div class="dashboard">
+      <section class="group-card upload-preview-wrap">
+        <div class="group-title">Input and Preview</div>
+        <div class="upload-preview">
+          <div class="upload-panel">
+            <div class="card-title">Upload Data</div>
+            <div class="panel-inner">
+              <div class="soft-box">
+                <div class="field-label">Selected LLM:</div>
+                <div class="radio-list">
+                  <div class="radio-item"><span class="radio selected"></span><span>GPT-5.4</span></div>
+                  <div class="radio-item"><span class="radio"></span><span>Gemini-3.1-pro</span></div>
+                  <div class="radio-item"><span class="radio"></span><span>DeepSeek-v3.2</span></div>
+                  <div class="radio-item"><span class="radio"></span><span>Opus-4.6</span></div>
+                </div>
+                <div class="upload-btn">⤴ Upload Files</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="preview-panel">
+            <div class="card-title">Input Data Preview</div>
+            <div class="panel-inner">
+              <table>
+                <thead>
+                  <tr>
+                    <th>CID</th>
+                    <th>Email</th>
+                    <th>Age</th>
+                    <th>Order Date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <tr><td>C55231</td><td>mia.chen@email.com</td><td>31</td><td>2024-04-12</td></tr>
+                    <tr><td>C55268</td><td>leo_wu@test.com</td><td>27</td><td>2024-03-29</td></tr>
+                    <tr><td>C55314</td><td>nora.li@mail.com</td><td>64</td><td>2024-04-03</td></tr>
+                    <tr><td>C55372</td><td>ethan.zhou@email.com</td><td>19</td><td>2024-02-18</td></tr>
+                    <tr><td>C55420</td><td>ava.lin@test.com</td><td>42</td><td>2024-01-27</td></tr>
+                    <tr><td>…</td><td>oliver.sun@gmail.com</td><td>36</td><td>2024-04-09</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </section>
+
+        <section class="group-card decision-wrap">
+        <div style="
+            display:flex;
+            align-items:center;
+            justify-content:space-between;
+            padding: 14px 18px 8px;
+        ">
+            <div class="group-title" style="padding:0;">Decision Tree</div>
+
+            <div style="
+            display:flex;
+            gap:8px;
+            ">
+            <div style="
+                padding:6px 14px;
+                border-radius:999px;
+                background:#eef1f6;
+                color:#596276;
+                font-size:13px;
+                font-weight:700;
+                border:1px solid #d9e0ec;
+            ">
+                Previous
+            </div>
+
+            <div style="
+                padding:6px 14px;
+                border-radius:999px;
+                background:#5f8df7;
+                color:#fff;
+                font-size:13px;
+                font-weight:700;
+                border:1px solid #4f7ef0;
+                box-shadow: 0 4px 10px rgba(95, 141, 247, 0.2);
+            ">
+                Next
+            </div>
+            </div>
+        </div>
+
+        <section class="decision-card section-tight">
+            <div class="decision-inner" style="padding-top: 6px;">
+            <div style="
+                width: 100%;
+                height: 310px;
+                border-radius: 14px;
+                overflow: hidden;
+                background: #ffffff;
+                border: 1px solid #dfe4ec;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            ">
+                <img
+                src="5.png"
+                alt="Decision Tree"
+                style="width: 100%; height: 100%; object-fit: contain; display: block;"
+                />
+            </div>
+            </div>
+        </section>
+        </section>
+
+      <section class="multi-wrap">
+        <div class="group-title">Multi-perspective Profilling</div>
+
+        <section class="card consistency-card section-tight" style="background:#eef1f6;">
+        <div style="padding: 18px 18px 22px; color:#243246;">
+            <div style="font-size: 15px; font-weight: 800; line-height: 1.4; margin-bottom: 8px;">
+            Confidence Avg: 0.9989
+            </div>
+
+            <div style="font-size: 18px; font-weight: 800; line-height: 1.4; margin-bottom: 6px;">
+            Fairness
+            </div>
+
+            <div style="font-size: 15px; font-weight: 800; line-height: 1.4; margin-bottom: 6px;">
+            Top-3 Error Concentration: 49.2%
+            </div>
+
+            <div style="font-size: 15px; line-height: 1.65;">
+            <span style="font-weight: 800;">Interpretation:</span>
+            Detected errors are moderately concentrated in a small number of attributes.
+            </div>
+        </div>
+        </section>
+
+        <section class="card metric-card" style="background:#eef1f6;">
+          <div class="metric-box">
+            <div class="metric-label">Accuracy</div>
+            <div class="metric-value">0.9728</div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-label">Precision</div>
+            <div class="metric-value">0.7851</div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-label">Recall</div>
+            <div class="metric-value">0.7389</div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-label">F1 Score</div>
+            <div class="metric-value">0.7726</div>
+          </div>
+          <div class="metric-box">
+            <div class="metric-label">Error Rate</div>
+            <div class="metric-value">0.0368</div>
+          </div>
+        </section>
+
+        <section class="card recommend-card section-tight" style="background:#eef1f6;">
+        <div class="card-title">Recommendations</div>
+        <div class="recommend-content">
+            <ul>
+            <li>Columns ['City', 'ZipCode', 'PhoneNumber'] now show recurring violations and should be strengthened with additional validation rules.</li>
+            <li>Columns ['MeasureName', 'Stateavg', 'Sample'] remain unstable after the new data patch and should be prioritized for refinement.</li>
+            <li>The updated detector captures more errors on newly arrived data, but several issues are still concentrated in a small number of attributes.</li>
+            </ul>
+        </div>
+        </section>
+
+        <section class="card column-card section-tight" style="background:#eef1f6;">
+          <div class="card-title">Column-level Analysis</div>
+          <div class="column-wrap">
+            <table style="background:#f1f3f7;">
+              <thead>
+                <tr>
+                  <th>Column</th>
+                  <th>Score</th>
+                  <th>Accuracy</th>
+                  <th>Precision</th>
+                  <th>Recall</th>
+                  <th>F1 Score</th>
+                  <th>Error Rate</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Score</td>
+                  <td><span class="badge acceptable">Acceptable</span></td>
+                  <td>0.9742</td>
+                  <td>0.7526</td>
+                  <td>0.7129</td>
+                  <td>0.9146</td>
+                  <td>0.0312</td>
+                </tr>
+                <tr>
+                  <td>Sample</td>
+                  <td><span class="badge risky">Risky</span></td>
+                  <td>0.9486</td>
+                  <td>0.7632</td>
+                  <td>0.6746</td>
+                  <td>0.5432</td>
+                  <td>0.0336</td>
+                </tr>
+                <tr>
+                  <td>Stateavg</td>
+                  <td><span class="badge good">Good</span></td>
+                  <td>0.9846</td>
+                  <td>0.7628</td>
+                  <td>0.8165</td>
+                  <td>0.8423</td>
+                  <td>0.0234</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </section>
+    </div>
+  </div>
+</body>
+</html>

@@ -1,0 +1,239 @@
+{
+  "summary": {
+    "accuracy": 0.9787058823529412,
+    "precision": 0.8438438438438438,
+    "recall": 0.6853658536585366,
+    "f1": 0.7563930013458949,
+    "error_rate": 0.021294117647058797
+  },
+  "completeness": {
+    "missing_rate": 0.013352941176470588,
+    "missing_by_column": {
+      "Score": 167,
+      "Sample": 60
+    }
+  },
+  "consistency": {
+    "anomaly_ratio": 0.0323138377153759,
+    "anomaly_by_column": {
+      "MeasureName": 111,
+      "Stateavg": 78,
+      "MeasureCode": 37,
+      "City": 33,
+      "PhoneNumber": 33,
+      "HospitalType": 32,
+      "Sample": 31,
+      "CountyName": 30,
+      "ProviderNumber": 28,
+      "Score": 28,
+      "Address": 27,
+      "EmergencyService": 27,
+      "HospitalOwner": 25,
+      "HospitalName": 22
+    }
+  },
+  "fairness": {
+    "error_density_skew": 0.44144144144144143,
+    "interpretation": "44.1% of detected errors concentrate in top-3 attributes"
+  },
+  "column_analysis": [
+    {
+      "column": "ProviderNumber",
+      "status": "good",
+      "accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tp": 28,
+      "fp": 0,
+      "fn": 0
+    },
+    {
+      "column": "HospitalName",
+      "status": "good",
+      "accuracy": 0.998,
+      "precision": 1.0,
+      "recall": 0.9166666666666666,
+      "f1": 0.9565217391304348,
+      "tp": 22,
+      "fp": 0,
+      "fn": 2
+    },
+    {
+      "column": "Address",
+      "status": "good",
+      "accuracy": 0.996,
+      "precision": 1.0,
+      "recall": 0.8709677419354839,
+      "f1": 0.9310344827586207,
+      "tp": 27,
+      "fp": 0,
+      "fn": 4
+    },
+    {
+      "column": "City",
+      "status": "good",
+      "accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tp": 33,
+      "fp": 0,
+      "fn": 0
+    },
+    {
+      "column": "State",
+      "status": "failed",
+      "accuracy": 0.974,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0,
+      "tp": 0,
+      "fp": 0,
+      "fn": 26
+    },
+    {
+      "column": "ZipCode",
+      "status": "failed",
+      "accuracy": 0.97,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0,
+      "tp": 0,
+      "fp": 0,
+      "fn": 30
+    },
+    {
+      "column": "CountyName",
+      "status": "risky",
+      "accuracy": 0.97,
+      "precision": 1.0,
+      "recall": 0.5,
+      "f1": 0.6666666666666666,
+      "tp": 30,
+      "fp": 0,
+      "fn": 30
+    },
+    {
+      "column": "PhoneNumber",
+      "status": "good",
+      "accuracy": 0.999,
+      "precision": 1.0,
+      "recall": 0.9705882352941176,
+      "f1": 0.9850746268656716,
+      "tp": 33,
+      "fp": 0,
+      "fn": 1
+    },
+    {
+      "column": "HospitalType",
+      "status": "good",
+      "accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tp": 32,
+      "fp": 0,
+      "fn": 0
+    },
+    {
+      "column": "HospitalOwner",
+      "status": "good",
+      "accuracy": 0.998,
+      "precision": 1.0,
+      "recall": 0.9259259259259259,
+      "f1": 0.9615384615384615,
+      "tp": 25,
+      "fp": 0,
+      "fn": 2
+    },
+    {
+      "column": "EmergencyService",
+      "status": "good",
+      "accuracy": 1.0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "tp": 27,
+      "fp": 0,
+      "fn": 0
+    },
+    {
+      "column": "Condition",
+      "status": "failed",
+      "accuracy": 0.968,
+      "precision": 0.0,
+      "recall": 0.0,
+      "f1": 0,
+      "tp": 0,
+      "fp": 0,
+      "fn": 32
+    },
+    {
+      "column": "MeasureCode",
+      "status": "good",
+      "accuracy": 0.992,
+      "precision": 0.7837837837837838,
+      "recall": 1.0,
+      "f1": 0.8787878787878788,
+      "tp": 29,
+      "fp": 8,
+      "fn": 0
+    },
+    {
+      "column": "MeasureName",
+      "status": "acceptable",
+      "accuracy": 0.958,
+      "precision": 0.6486486486486487,
+      "recall": 0.96,
+      "f1": 0.7741935483870968,
+      "tp": 72,
+      "fp": 39,
+      "fn": 3
+    },
+    {
+      "column": "Score",
+      "status": "risky",
+      "accuracy": 0.892,
+      "precision": 0.9456521739130435,
+      "recall": 0.45789473684210524,
+      "f1": 0.6170212765957447,
+      "tp": 87,
+      "fp": 5,
+      "fn": 103
+    },
+    {
+      "column": "Sample",
+      "status": "good",
+      "accuracy": 0.976,
+      "precision": 1.0,
+      "recall": 0.7913043478260869,
+      "f1": 0.883495145631068,
+      "tp": 91,
+      "fp": 0,
+      "fn": 24
+    },
+    {
+      "column": "Stateavg",
+      "status": "risky",
+      "accuracy": 0.947,
+      "precision": 0.3333333333333333,
+      "recall": 0.9629629629629629,
+      "f1": 0.4952380952380952,
+      "tp": 26,
+      "fp": 52,
+      "fn": 1
+    }
+  ],
+  "ensemble_analysis": {
+    "num_workers": 5,
+    "avg_reliability": 0.9651168489931855,
+    "min_reliability": 0.931689273029908,
+    "max_reliability": 0.9891204937297964
+  },
+  "recommendations": [
+    "Columns ['State', 'ZipCode', 'Condition'] show zero recall and require new rules or constraints.",
+    "Columns ['CountyName', 'Score', 'Stateavg'] have low recall or precision and should be prioritized.",
+    "The detector is conservative: anomaly ratio is low but recall is limited."
+  ]
+}
